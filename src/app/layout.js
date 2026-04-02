@@ -1,5 +1,7 @@
 import { Inter, Playfair_Display } from "next/font/google";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import Analytics from "@/components/Analytics";
+import { organizationSchema, websiteSchema, localBusinessSchema } from "@/lib/structured-data";
 import "./globals.css";
 
 const inter = Inter({
@@ -93,6 +95,19 @@ export default function RootLayout({ children }) {
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
         <meta name="theme-color" content="#000000" />
         <meta property="og:url" content="https://whysbr.com" />
+        {/* —— JSON-LD Structured Data —— */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
+        />
       </head>
       <body className="bg-background text-foreground antialiased font-sans min-h-screen selection:bg-white selection:text-black overflow-x-hidden">
         <ThemeProvider
@@ -102,6 +117,7 @@ export default function RootLayout({ children }) {
           disableTransitionOnChange
         >
           {children}
+          <Analytics />
         </ThemeProvider>
       </body>
     </html>
