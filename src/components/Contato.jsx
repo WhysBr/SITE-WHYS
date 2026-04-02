@@ -41,7 +41,7 @@ export default function Contato() {
           <div className="flex flex-col">
             <Phone className="w-6 h-6 mb-3 text-foreground/80 stroke-[1.5]" />
             <h3 className="text-lg md:text-xl font-medium mb-3">Central de Atendimento</h3>
-            <p className="text-foreground/70 text-sm mb-2">+55 69 981162676</p>
+            <p className="text-foreground/70 text-sm mb-2">+55 69 9 8116-2676</p>
           </div>
 
           <div className="flex flex-col">
