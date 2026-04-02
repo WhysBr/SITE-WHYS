@@ -15,8 +15,8 @@ export default function Hero() {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.1, delayChildren: 0.3 }
-    }
+      transition: { staggerChildren: 0.1, delayChildren: 0.3 },
+    },
   };
 
   const itemVariants = {
@@ -24,8 +24,8 @@ export default function Hero() {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] }
-    }
+      transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
+    },
   };
 
   return (
@@ -36,7 +36,7 @@ export default function Hero() {
       animate="visible"
       className="relative w-full min-h-[60vh] md:min-h-[70vh] flex flex-col justify-end pb-8 md:pb-12 pt-32 md:pt-40"
     >
-      {/* Top Texts — hidden on small mobile to avoid overlap */}
+      {/* Top Texts */}
       <motion.div
         variants={itemVariants}
         className="absolute top-0 left-0 w-full hidden sm:flex justify-between items-start mt-8 px-4 md:px-0"
@@ -49,11 +49,13 @@ export default function Hero() {
         <div className="text-right text-[12px] md:text-[13px] text-foreground/80 leading-snug font-medium hover:text-foreground transition-colors cursor-default">
           <p>design criativo</p>
           <p>branding</p>
-          <p className="flex items-center justify-end gap-2">ux/ui <span className="w-2 h-2 rounded-full bg-foreground block mt-0.5" /></p>
+          <p className="flex items-center justify-end gap-2">
+            ux/ui <span className="w-2 h-2 rounded-full bg-foreground block mt-0.5" />
+          </p>
         </div>
       </motion.div>
 
-      {/* Floating Center Explore Button — hidden on mobile */}
+      {/* Floating Explore — desktop only */}
       <motion.div
         variants={itemVariants}
         className="absolute top-[10%] left-[50%] -translate-x-1/2 z-10 hidden md:flex flex-col items-center"
@@ -66,7 +68,7 @@ export default function Hero() {
         </div>
       </motion.div>
 
-      {/* Scattered interactive nodes — hidden on mobile */}
+      {/* Scattered nodes — desktop only */}
       <motion.div
         variants={itemVariants}
         className="absolute left-[3%] bottom-[75%] w-12 h-12 rounded-full border border-foreground/30 items-center justify-center hover:bg-[#965EC7] hover:border-[#965EC7] hover:text-white text-foreground hover:scale-110 cursor-pointer transition-all duration-300 hidden md:flex"
@@ -78,12 +80,11 @@ export default function Hero() {
         variants={itemVariants}
         className="absolute left-[20%] bottom-[70%] hidden md:flex gap-4"
       >
-        <div className="w-12 h-12 rounded-full border border-foreground/30 flex items-center justify-center hover:bg-[#965EC7] hover:border-[#965EC7] hover:text-white text-foreground hover:scale-110 cursor-pointer transition-all duration-300">
-          <Eye className="w-6 h-6" strokeWidth={1.5} />
-        </div>
-        <div className="w-12 h-12 rounded-full border border-foreground/30 flex items-center justify-center hover:bg-[#965EC7] hover:border-[#965EC7] hover:text-white text-foreground hover:scale-110 cursor-pointer transition-all duration-300">
-          <Share2 className="w-6 h-6" strokeWidth={1.5} />
-        </div>
+        {[Eye, Share2].map((Icon, i) => (
+          <div key={i} className="w-12 h-12 rounded-full border border-foreground/30 flex items-center justify-center hover:bg-[#965EC7] hover:border-[#965EC7] hover:text-white text-foreground hover:scale-110 cursor-pointer transition-all duration-300">
+            <Icon className="w-6 h-6" strokeWidth={1.5} />
+          </div>
+        ))}
       </motion.div>
 
       {/* Conquer text */}
@@ -116,7 +117,7 @@ export default function Hero() {
         </div>
 
         <div className="w-full relative flex justify-center items-end leading-[0.85] mt-3 md:mt-6 text-foreground">
-          {/* Our Projects Widget */}
+          {/* Projects Widget */}
           <motion.div
             variants={itemVariants}
             className="absolute left-0 bottom-2 md:bottom-4 flex flex-col items-start cursor-pointer group"
@@ -130,7 +131,7 @@ export default function Hero() {
             <div className="font-bold text-sm md:text-lg xl:text-xl uppercase tracking-tighter group-hover:text-foreground/70 transition-colors">PROJETOS</div>
           </motion.div>
 
-          {/* Sparkle star — desktop only */}
+          {/* Sparkle */}
           <motion.div
             animate={{ rotate: 360 }}
             transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
@@ -141,8 +142,8 @@ export default function Hero() {
             </svg>
           </motion.div>
 
-          {/* Typography: Digital Studio */}
-          <div className="flex flex-1 overflow-hidden relative pb-4 md:pb-6 pt-2" style={{ fontFamily: "var(--font-serif)" }}>
+          {/* Digital Studio */}
+          <div className="flex flex-1 overflow-hidden relative pb-4 md:pb-6 pt-2">
             <motion.h1
               style={{ y: "100%" }}
               animate={{ y: 0 }}
@@ -161,7 +162,7 @@ export default function Hero() {
             </motion.h1>
           </div>
 
-          {/* Dots on the right */}
+          {/* Dots */}
           <motion.div variants={itemVariants} className="absolute right-0 bottom-4 md:bottom-6 flex gap-2">
             <span className="w-3 h-3 md:w-3.5 md:h-3.5 rounded-full bg-foreground block" />
             <span className="w-3 h-3 md:w-3.5 md:h-3.5 rounded-full border-2 border-foreground/60 block" />

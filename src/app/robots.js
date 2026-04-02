@@ -5,6 +5,6 @@ export default function robots() {
       allow: "/",
       disallow: [],
     },
-    sitemap: "https://whysagency.com.br/sitemap.xml",
+    sitemap: "https://whysbr.com/sitemap.xml",
   };
 }

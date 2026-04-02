@@ -1,72 +1,79 @@
 "use client";
+import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { FileText, LayoutTemplate, Users, Code, Wrench } from "lucide-react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function Processos() {
+  const sectionRef = useRef(null);
+  const headingRef = useRef(null);
+
   const steps = [
-    {
-      id: "01",
-      title: "Briefing",
-      desc: "Entendimento profundo do seu negócio, mercado e objetivos.",
-      icon: <FileText className="w-6 h-6 text-foreground" strokeWidth={1.5} />,
-    },
-    {
-      id: "02",
-      title: "Wireframe & Design",
-      desc: "Estruturação das telas, UX e aplicação da alta fidelidade visual.",
-      icon: <LayoutTemplate className="w-6 h-6 text-foreground" strokeWidth={1.5} />,
-    },
-    {
-      id: "03",
-      title: "Reuniões Constantes",
-      desc: "Alinhamentos contínuos para garantir que cada pixel exale excelência.",
-      icon: <Users className="w-6 h-6 text-foreground" strokeWidth={1.5} />,
-    },
-    {
-      id: "04",
-      title: "Implementação",
-      desc: "Desenvolvimento técnico robusto com animações e performance extrema.",
-      icon: <Code className="w-6 h-6 text-foreground" strokeWidth={1.5} />,
-    },
-    {
-      id: "05",
-      title: "Pós-Venda (Manutenção)",
-      desc: "Cuidado e aprimoramento contínuo após o lançamento do projeto.",
-      icon: <Wrench className="w-6 h-6 text-foreground" strokeWidth={1.5} />,
-    },
+    { id: "01", title: "Briefing", desc: "Entendimento profundo do seu negócio, mercado e objetivos.", icon: <FileText className="w-6 h-6 text-foreground" strokeWidth={1.5} /> },
+    { id: "02", title: "Wireframe & Design", desc: "Estruturação das telas, UX e aplicação da alta fidelidade visual.", icon: <LayoutTemplate className="w-6 h-6 text-foreground" strokeWidth={1.5} /> },
+    { id: "03", title: "Reuniões Constantes", desc: "Alinhamentos contínuos para garantir que cada pixel exale excelência.", icon: <Users className="w-6 h-6 text-foreground" strokeWidth={1.5} /> },
+    { id: "04", title: "Implementação", desc: "Desenvolvimento técnico robusto com animações e performance extrema.", icon: <Code className="w-6 h-6 text-foreground" strokeWidth={1.5} /> },
+    { id: "05", title: "Pós-Venda (Manutenção)", desc: "Cuidado e aprimoramento contínuo após o lançamento do projeto.", icon: <Wrench className="w-6 h-6 text-foreground" strokeWidth={1.5} /> },
   ];
 
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      const heading = headingRef.current;
+      if (!heading) return;
+
+      const words = heading.innerText.split(" ");
+      heading.innerHTML = words
+        .map(
+          (w) =>
+            `<span style="display:inline-block;overflow:hidden;vertical-align:bottom;"><span class="gsap-proc-word" style="display:inline-block;transform:translateY(110%);">${w}&nbsp;</span></span>`
+        )
+        .join("");
+
+      gsap.to(".gsap-proc-word", {
+        y: 0,
+        duration: 0.9,
+        stagger: 0.05,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: heading,
+          start: "top 85%",
+          once: true,
+        },
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section id="processos" className="w-full py-16 md:py-40 border-t border-foreground/10 relative overflow-hidden">
-      {/* Title Area */}
+    <section ref={sectionRef} id="processos" className="w-full py-16 md:py-40 border-t border-foreground/10 relative overflow-hidden">
+      {/* Title */}
       <div className="relative z-10 text-center mb-16 md:mb-32 px-4">
         <h2 className="text-sm uppercase tracking-[0.3em] font-medium text-foreground/50 mb-4 md:mb-6">Nossa Metodologia</h2>
-        <motion.h3
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        <h3
+          ref={headingRef}
           className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light tracking-tight"
         >
           O caminho para o <span className="font-serif italic text-[#965EC7]">sucesso</span>
-        </motion.h3>
+        </h3>
       </div>
 
-      {/* Timeline Wrapper */}
+      {/* Timeline */}
       <div className="relative max-w-5xl mx-auto px-4 md:px-6">
-        {/* Main Vertical Track (desktop only) */}
         <div className="absolute left-1/2 top-0 bottom-0 w-px bg-foreground/10 -translate-x-1/2 hidden md:block" />
 
         <div className="flex flex-col gap-10 md:gap-40 relative">
           {steps.map((step, index) => {
             const isEven = index % 2 === 0;
-
             return (
               <div
                 key={step.id}
                 className={`w-full flex flex-col md:flex-row md:justify-between items-start md:items-center ${isEven ? "md:flex-row" : "md:flex-row-reverse"} relative`}
               >
-                {/* Horizontal branch — desktop only */}
+                {/* Branch line */}
                 <motion.div
                   initial={{ scaleX: 0 }}
                   whileInView={{ scaleX: 1 }}
@@ -76,7 +83,7 @@ export default function Processos() {
                   className={`absolute top-1/2 -translate-y-1/2 w-[calc(50%-2rem)] h-px bg-[#965EC7]/40 hidden md:block ${isEven ? "left-8" : "right-8"}`}
                 />
 
-                {/* Central Dot — desktop only */}
+                {/* Center dot */}
                 <motion.div
                   initial={{ scale: 0 }}
                   whileInView={{ scale: 1 }}
@@ -85,13 +92,13 @@ export default function Processos() {
                   className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-background border-2 border-[#965EC7] z-20 hidden md:block"
                 />
 
-                {/* Card Container */}
-                <div className={`w-full md:w-[calc(50%-4rem)] z-10`}>
+                {/* Card */}
+                <div className="w-full md:w-[calc(50%-4rem)] z-10">
                   <motion.div
-                    initial={{ opacity: 0, y: 20, x: 0 }}
-                    whileInView={{ opacity: 1, y: 0, x: 0 }}
+                    initial={{ opacity: 0, y: 25 }}
+                    whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-15%" }}
-                    transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                    transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
                     className="w-full rounded-[1.5rem] md:rounded-[2rem] border border-foreground/10 bg-background p-6 md:p-8 hover:border-[#965EC7]/50 transition-colors duration-500 group relative overflow-hidden"
                   >
                     <div className="absolute inset-0 bg-gradient-to-br from-[#965EC7]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -107,8 +114,6 @@ export default function Processos() {
                     </div>
                   </motion.div>
                 </div>
-
-                {/* Empty Space desktop */}
                 <div className="hidden md:block w-[calc(50%-4rem)]" />
               </div>
             );

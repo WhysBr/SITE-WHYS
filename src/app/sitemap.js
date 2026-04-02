@@ -1,25 +1,25 @@
 export default function sitemap() {
   return [
     {
-      url: "https://whysagency.com.br",
+      url: "https://whysbr.com",
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 1,
     },
     {
-      url: "https://whysagency.com.br/#quem-somos",
+      url: "https://whysbr.com/#quem-somos",
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
-      url: "https://whysagency.com.br/#cases",
+      url: "https://whysbr.com/#cases",
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 0.9,
     },
     {
-      url: "https://whysagency.com.br/#contato",
+      url: "https://whysbr.com/#contato",
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.7,

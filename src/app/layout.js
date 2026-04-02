@@ -18,7 +18,7 @@ const playfair = Playfair_Display({
 });
 
 export const metadata = {
-  metadataBase: new URL("https://whysagency.com.br"),
+  metadataBase: new URL("https://whysbr.com"),
   title: {
     default: "WHYS | Creative Design Digital Studio",
     template: "%s | WHYS",
@@ -36,12 +36,12 @@ export const metadata = {
     "Brasil",
     "WHYS",
   ],
-  authors: [{ name: "WHYS Studio", url: "https://whysagency.com.br" }],
+  authors: [{ name: "WHYS Studio", url: "https://whysbr.com" }],
   creator: "WHYS Studio",
   openGraph: {
     type: "website",
     locale: "pt_BR",
-    url: "https://whysagency.com.br",
+    url: "https://whysbr.com",
     siteName: "WHYS Studio",
     title: "WHYS | Creative Design Digital Studio",
     description:
@@ -75,7 +75,7 @@ export const metadata = {
     },
   },
   alternates: {
-    canonical: "https://whysagency.com.br",
+    canonical: "https://whysbr.com",
   },
 };
 
@@ -92,6 +92,7 @@ export default function RootLayout({ children }) {
         <link rel="icon" href="/logo-simbolo.png" type="image/png" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
         <meta name="theme-color" content="#000000" />
+        <meta property="og:url" content="https://whysbr.com" />
       </head>
       <body className="bg-background text-foreground antialiased font-sans min-h-screen selection:bg-white selection:text-black overflow-x-hidden">
         <ThemeProvider
