@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Phone, MapPin, Mail, Share2, ArrowRight } from "lucide-react";
 
@@ -11,6 +12,16 @@ const YoutubeIcon = ({ className }) => (<svg className={className} viewBox="0 0 
 const GithubIcon = ({ className }) => (<svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>);
 
 export default function Contato() {
+  const [formData, setFormData] = useState({ nome: "", email: "", assunto: "", mensagem: "" });
+
+  const handleWhatsApp = (e) => {
+    e.preventDefault();
+    const text = `nome completo = ${formData.nome}\ne-mail = ${formData.email}\nassunto: ${formData.assunto}\nmensagem = ${formData.mensagem}`;
+    const encodedText = encodeURIComponent(text);
+    const url = `https://wa.me/5569981162676?text=${encodedText}`;
+    window.open(url, '_blank');
+  };
+
   return (
     <section id="contato" className="w-full py-16 md:py-24 flex flex-col lg:flex-row gap-12 md:gap-16 lg:gap-24 justify-between items-start">
 
@@ -30,8 +41,7 @@ export default function Contato() {
           <div className="flex flex-col">
             <Phone className="w-6 h-6 mb-3 text-foreground/80 stroke-[1.5]" />
             <h3 className="text-lg md:text-xl font-medium mb-3">Central de Atendimento</h3>
-            <p className="text-foreground/70 text-sm mb-2">0800 100 575</p>
-            <p className="text-foreground/70 text-sm">+55 (11) 98765-4321</p>
+            <p className="text-foreground/70 text-sm mb-2">+55 69 981162676</p>
           </div>
 
           <div className="flex flex-col">
@@ -70,29 +80,42 @@ export default function Contato() {
           Defina seus objetivos e identifique áreas onde podemos agregar valor ao seu negócio.
         </p>
 
-        <form className="flex flex-col gap-6 md:gap-8 w-full" onSubmit={(e) => e.preventDefault()}>
+        <form className="flex flex-col gap-6 md:gap-8 w-full" onSubmit={handleWhatsApp}>
           <input
             type="text"
             placeholder="Nome completo"
+            value={formData.nome}
+            onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
             className="w-full bg-transparent border-b border-foreground/30 py-3 text-sm focus:outline-none focus:border-foreground transition-colors placeholder:text-foreground/50"
+            required
           />
           <input
             type="email"
             placeholder="E-mail"
+            value={formData.email}
+            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
             className="w-full bg-transparent border-b border-foreground/30 py-3 text-sm focus:outline-none focus:border-foreground transition-colors placeholder:text-foreground/50"
+            required
           />
           <input
             type="text"
             placeholder="Assunto"
+            value={formData.assunto}
+            onChange={(e) => setFormData({ ...formData, assunto: e.target.value })}
             className="w-full bg-transparent border-b border-foreground/30 py-3 text-sm focus:outline-none focus:border-foreground transition-colors placeholder:text-foreground/50"
+            required
           />
           <input
             type="text"
             placeholder="Mensagem"
+            value={formData.mensagem}
+            onChange={(e) => setFormData({ ...formData, mensagem: e.target.value })}
             className="w-full bg-transparent border-b border-foreground/30 py-3 text-sm focus:outline-none focus:border-foreground transition-colors placeholder:text-foreground/50"
+            required
           />
 
           <motion.button
+            type="submit"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             className="flex items-center justify-center gap-3 bg-foreground text-background rounded-full py-4 px-8 w-full sm:w-fit mt-4 text-sm font-medium transition-all hover:bg-foreground/90 cursor-pointer"
