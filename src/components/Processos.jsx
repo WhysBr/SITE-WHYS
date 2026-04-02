@@ -7,17 +7,18 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
+// Steps use icon NAMES (not JSX) so color can be inherited from parent
+const STEPS = [
+  { id: "01", title: "Briefing",              desc: "Entendimento profundo do seu negócio, mercado e objetivos.",                        Icon: FileText },
+  { id: "02", title: "Wireframe & Design",   desc: "Estruturação das telas, UX e aplicação da alta fidelidade visual.",                 Icon: LayoutTemplate },
+  { id: "03", title: "Reuniões Constantes",  desc: "Alinhamentos contínuos para garantir que cada pixel exale excelência.",              Icon: Users },
+  { id: "04", title: "Implementação",        desc: "Desenvolvimento técnico robusto com animações e performance extrema.",               Icon: Code },
+  { id: "05", title: "Pós-Venda",           desc: "Cuidado e aprimoramento contínuo após o lançamento do projeto.",                     Icon: Wrench },
+];
+
 export default function Processos() {
   const sectionRef = useRef(null);
   const headingRef = useRef(null);
-
-  const steps = [
-    { id: "01", title: "Briefing", desc: "Entendimento profundo do seu negócio, mercado e objetivos.", icon: <FileText className="w-6 h-6 text-foreground" strokeWidth={1.5} /> },
-    { id: "02", title: "Wireframe & Design", desc: "Estruturação das telas, UX e aplicação da alta fidelidade visual.", icon: <LayoutTemplate className="w-6 h-6 text-foreground" strokeWidth={1.5} /> },
-    { id: "03", title: "Reuniões Constantes", desc: "Alinhamentos contínuos para garantir que cada pixel exale excelência.", icon: <Users className="w-6 h-6 text-foreground" strokeWidth={1.5} /> },
-    { id: "04", title: "Implementação", desc: "Desenvolvimento técnico robusto com animações e performance extrema.", icon: <Code className="w-6 h-6 text-foreground" strokeWidth={1.5} /> },
-    { id: "05", title: "Pós-Venda (Manutenção)", desc: "Cuidado e aprimoramento contínuo após o lançamento do projeto.", icon: <Wrench className="w-6 h-6 text-foreground" strokeWidth={1.5} /> },
-  ];
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -37,11 +38,7 @@ export default function Processos() {
         duration: 0.9,
         stagger: 0.05,
         ease: "power3.out",
-        scrollTrigger: {
-          trigger: heading,
-          start: "top 85%",
-          once: true,
-        },
+        scrollTrigger: { trigger: heading, start: "top 85%", once: true },
       });
     }, sectionRef);
 
@@ -66,8 +63,9 @@ export default function Processos() {
         <div className="absolute left-1/2 top-0 bottom-0 w-px bg-foreground/10 -translate-x-1/2 hidden md:block" />
 
         <div className="flex flex-col gap-10 md:gap-40 relative">
-          {steps.map((step, index) => {
+          {STEPS.map((step, index) => {
             const isEven = index % 2 === 0;
+            const { Icon } = step;
             return (
               <div
                 key={step.id}
@@ -99,21 +97,36 @@ export default function Processos() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-15%" }}
                     transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-                    className="w-full rounded-[1.5rem] md:rounded-[2rem] border border-foreground/10 bg-background p-6 md:p-8 hover:border-[#965EC7]/50 transition-colors duration-500 group relative overflow-hidden"
+                    className="w-full rounded-[1.5rem] md:rounded-[2rem] border border-foreground/10 bg-background p-6 md:p-8 group relative overflow-hidden cursor-default
+                               hover:border-[#965EC7]/50 transition-colors duration-500"
                   >
-                    <div className="absolute inset-0 bg-gradient-to-br from-[#965EC7]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    {/* Purple glow on hover */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-[#965EC7]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+
                     <div className="relative z-10">
+                      {/* Icon circle — fill changes on hover; icon inherits currentColor */}
                       <div className="flex items-center gap-4 mb-6 md:mb-8">
-                        <div className="w-12 h-12 md:w-14 md:h-14 rounded-full border border-foreground/20 flex items-center justify-center group-hover:bg-foreground group-hover:text-background transition-colors duration-300">
-                          {step.icon}
+                        <div className="
+                          w-12 h-12 md:w-14 md:h-14 rounded-full border border-foreground/20
+                          flex items-center justify-center
+                          text-foreground                        /* default icon color */
+                          group-hover:bg-[#965EC7]               /* purple fill on hover */
+                          group-hover:border-[#965EC7]
+                          group-hover:text-white                 /* icon turns white on hover */
+                          transition-all duration-300
+                        ">
+                          {/* Icon uses currentColor — inherits text-foreground / group-hover:text-white */}
+                          <Icon className="w-6 h-6" strokeWidth={1.5} />
                         </div>
                         <span className="text-[#965EC7] font-serif italic text-2xl md:text-3xl">{step.id}</span>
                       </div>
+
                       <h4 className="text-2xl md:text-3xl font-light mb-3 md:mb-4 text-foreground">{step.title}</h4>
                       <p className="text-foreground/60 text-sm md:text-base leading-relaxed tracking-wide">{step.desc}</p>
                     </div>
                   </motion.div>
                 </div>
+
                 <div className="hidden md:block w-[calc(50%-4rem)]" />
               </div>
             );

@@ -15,7 +15,7 @@ const navLinks = [
   { href: "#nosso-time", label: "Nosso Time" },
 ];
 
-export default function Header() {
+export default function Header({ onPortfolioOpen }) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
@@ -58,18 +58,19 @@ export default function Header() {
           </div>
         </div>
 
-        {/* Center Absolute Drop (Desktop only) */}
-        <a
-          href="#cases"
-          className="absolute left-1/2 -translate-x-1/2 top-6 h-28 w-24 hidden md:flex flex-col items-center justify-end pb-4 border border-t-0 border-white/20 rounded-b-full bg-black pointer-events-auto group outline-none"
+        {/* Center Drop Button — opens Portfolio Drawer on click */}
+        <button
+          onClick={onPortfolioOpen}
+          className="absolute left-1/2 -translate-x-1/2 top-6 h-28 w-24 hidden md:flex flex-col items-center justify-end pb-4 border border-t-0 border-white/20 rounded-b-full bg-black pointer-events-auto group outline-none hover:border-white/40 transition-colors"
+          aria-label="Ver portfólio"
         >
-          <span className="text-[10px] uppercase font-bold tracking-widest text-white mb-3 whitespace-nowrap -mt-6 group-hover:text-white/70 transition-colors">VER MAIS</span>
-          <div className="w-10 h-16 rounded-full border border-white/30 flex items-center justify-center cursor-pointer hover:border-white transition-colors group-hover:scale-105 active:scale-95 overflow-hidden">
+          <span className="text-[10px] uppercase font-bold tracking-widest text-white mb-3 whitespace-nowrap -mt-6 group-hover:text-[#965EC7] transition-colors duration-300">VER MAIS</span>
+          <div className="w-10 h-16 rounded-full border border-white/30 flex items-center justify-center group-hover:border-[#965EC7] transition-colors duration-300 overflow-hidden">
             <span className="w-px h-6 bg-white block relative group-hover:translate-y-5 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]">
               <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-2 h-2 border-b border-r border-white rotate-45 translate-y-0.5" />
             </span>
           </div>
-        </a>
+        </button>
 
         {/* Right Actions */}
         <div className="relative z-10 flex items-center gap-2 md:gap-4 h-20 pr-3 md:pr-6 pointer-events-auto">
