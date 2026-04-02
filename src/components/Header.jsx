@@ -66,9 +66,15 @@ export default function Header({ onPortfolioOpen }) {
         >
           <span className="text-[10px] uppercase font-bold tracking-widest text-white mb-3 whitespace-nowrap -mt-6 group-hover:text-[#965EC7] transition-colors duration-300">VER MAIS</span>
           <div className="w-10 h-16 rounded-full border border-white/30 flex items-center justify-center group-hover:border-[#965EC7] transition-colors duration-300 overflow-hidden">
-            <span className="w-px h-6 bg-white block relative group-hover:translate-y-5 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]">
+            {/* Looping downward arrow animation */}
+            <motion.span
+              animate={{ y: [0, 7, 0] }}
+              transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
+              className="w-px bg-white block relative"
+              style={{ height: "1.5rem" }}
+            >
               <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-2 h-2 border-b border-r border-white rotate-45 translate-y-0.5" />
-            </span>
+            </motion.span>
           </div>
         </button>
 
@@ -117,6 +123,18 @@ export default function Header({ onPortfolioOpen }) {
 
             {/* Nav Links */}
             <nav className="flex flex-col items-center gap-10">
+              {/* Portfólio — special action button */}
+              <motion.button
+                onClick={() => { setMenuOpen(false); onPortfolioOpen(); }}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 20 }}
+                transition={{ duration: 0.4, delay: 0, ease: [0.16, 1, 0.3, 1] }}
+                className="text-4xl sm:text-5xl font-light text-white hover:text-[#965EC7] transition-colors tracking-tight"
+              >
+                Portfólio
+              </motion.button>
+
               {navLinks.map((link, i) => (
                 <motion.a
                   key={link.href}
@@ -125,7 +143,7 @@ export default function Header({ onPortfolioOpen }) {
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 20 }}
-                  transition={{ duration: 0.4, delay: i * 0.07, ease: [0.16, 1, 0.3, 1] }}
+                  transition={{ duration: 0.4, delay: (i + 1) * 0.07, ease: [0.16, 1, 0.3, 1] }}
                   className="text-4xl sm:text-5xl font-light text-white hover:text-[#965EC7] transition-colors tracking-tight"
                 >
                   {link.label}

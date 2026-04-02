@@ -33,8 +33,8 @@ export const ProgressSlider = ({
   const frame = useRef(0);
   const firstFrameTime = useRef(performance.now());
   const targetValue = useRef(null);
-  const [sliderValues, setSliderValues] = useState([]);
   const progressRef = useRef(0);
+  const [sliderValues, setSliderValues] = useState([]);
 
   useEffect(() => {
     const getChildren = React.Children.toArray(children).find(
@@ -89,8 +89,7 @@ export const ProgressSlider = ({
   const handleButtonClick = (value) => {
     if (value !== active) {
       const elapsedTime = performance.now() - firstFrameTime.current;
-      const currentProgress = (elapsedTime / duration) * 100;
-      progressRef.current = currentProgress;
+      progressRef.current = (elapsedTime / duration) * 100;
       targetValue.current = value;
       setIsFastForward(true);
       firstFrameTime.current = performance.now();
@@ -136,28 +135,42 @@ export const SliderBtnGroup = ({ children, className = "" }) => (
 );
 
 // ─── SliderBtn ──────────────────────────────────────────────────────────────
+/**
+ * Progress bar uses mix-blend-mode: difference with a white fill so that
+ * as it sweeps across the button, all text/colors underneath are inverted.
+ * progressStyle prop allows passing extra inline styles to the fill span.
+ */
 export const SliderBtn = ({
   children,
   value,
   className = "",
   progressBarClass = "",
+  progressStyle = {},
 }) => {
   const { active, progress, handleButtonClick, vertical } = useProgressSliderContext();
   return (
     <button
       className={`relative ${active === value ? "opacity-100" : "opacity-50 hover:opacity-75"} transition-opacity ${className}`}
+      style={{ isolation: "isolate" }}
       onClick={() => handleButtonClick(value)}
     >
-      {children}
+      {/* Children sit on top */}
+      <div className="relative z-10">{children}</div>
+
+      {/* Progress fill — z-20 so it's above children; mix-blend-mode:difference inverts colors */}
       <div
-        className="absolute inset-0 overflow-hidden -z-10 max-h-full max-w-full"
+        className="absolute inset-0 overflow-hidden pointer-events-none"
         role="progressbar"
         aria-valuenow={active === value ? progress : 0}
+        aria-valuemin={0}
+        aria-valuemax={100}
       >
         <span
           className={`absolute left-0 top-0 ${progressBarClass}`}
           style={{
             [vertical ? "height" : "width"]: active === value ? `${progress}%` : "0%",
+            mixBlendMode: "difference",
+            ...progressStyle,
           }}
         />
       </div>

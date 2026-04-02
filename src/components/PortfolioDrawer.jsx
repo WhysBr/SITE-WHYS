@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ArrowUpRight } from "lucide-react";
+import { ChevronUp, ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 import {
   ProgressSlider,
@@ -51,57 +51,55 @@ export default function PortfolioDrawer({ isOpen, onClose }) {
     <AnimatePresence>
       {isOpen && (
         <>
-          {/* ── Backdrop ── */}
+          {/* ── Backdrop — only the bottom part visible below the drawer ── */}
           <motion.div
             key="backdrop"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.35 }}
+            transition={{ duration: 0.4 }}
             onClick={onClose}
-            className="fixed inset-0 bg-black/70 backdrop-blur-sm z-[60]"
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[60]"
           />
 
-          {/* ── Drawer Panel (not full screen — leaves top ~15vh visible) ── */}
+          {/* ── Drawer — slides DOWN from the top ── */}
           <motion.div
             key="drawer"
-            initial={{ y: "100%" }}
+            initial={{ y: "-100%" }}
             animate={{ y: 0 }}
-            exit={{ y: "100%" }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed bottom-0 left-0 right-0 z-[70] bg-background border-t border-foreground/10 rounded-t-[2rem] overflow-hidden"
-            style={{ height: "87vh" }}
+            exit={{ y: "-100%" }}
+            transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+            className="fixed top-0 left-0 right-0 z-[70] bg-background rounded-b-[2rem] overflow-hidden flex flex-col"
+            style={{ height: "78vh" }}
           >
-            {/* Drag handle visual */}
-            <div className="flex justify-center pt-4">
-              <div className="w-10 h-1 rounded-full bg-foreground/20" />
-            </div>
-
             {/* Header bar */}
-            <div className="flex items-center justify-between px-6 md:px-10 pt-4 pb-4 border-b border-foreground/10">
+            <div className="flex items-center justify-between px-6 md:px-10 pt-6 pb-4 border-b border-foreground/10 flex-shrink-0">
               <div>
                 <p className="text-[10px] uppercase tracking-[0.3em] text-foreground/40 font-bold mb-1">Portfólio</p>
                 <h2 className="text-xl md:text-3xl font-light tracking-tight">
                   Projetos <span className="font-serif italic text-[#965EC7]">Recentes</span>
                 </h2>
               </div>
+              {/* Top-right close (X) — secondary */}
               <button
                 onClick={onClose}
                 aria-label="Fechar portfólio"
                 className="w-10 h-10 rounded-full border border-foreground/20 flex items-center justify-center hover:bg-foreground hover:text-background transition-all duration-200 group"
               >
-                <X className="w-4 h-4 group-hover:rotate-90 transition-transform duration-300" />
+                <svg className="w-4 h-4 group-hover:rotate-90 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
               </button>
             </div>
 
-            {/* ── Carousel ── */}
-            <div className="px-6 md:px-10 pt-5 pb-6 h-[calc(87vh-100px)] overflow-hidden">
+            {/* ── Carousel content ── */}
+            <div className="flex-1 min-h-0 px-4 md:px-8 pt-4 pb-2 overflow-hidden flex flex-col gap-3">
               <ProgressSlider
                 activeSlider="elevate"
                 duration={7000}
-                className="flex flex-col h-full gap-4"
+                className="flex flex-col h-full gap-3"
               >
-                {/* Images */}
+                {/* Image slides */}
                 <SliderContent className="relative flex-1 min-h-0 rounded-2xl overflow-hidden">
                   {PROJECTS.map((p) => (
                     <SliderWrapper
@@ -118,11 +116,8 @@ export default function PortfolioDrawer({ isOpen, onClose }) {
                           sizes="(max-width: 768px) 100vw, 85vw"
                           priority
                         />
-                        {/* Overlay gradient */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-
-                        {/* Project info */}
-                        <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8 flex items-end justify-between">
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
+                        <div className="absolute bottom-0 left-0 right-0 p-5 md:p-8 flex items-end justify-between">
                           <div>
                             <span className="text-[#965EC7] text-[10px] uppercase tracking-[0.3em] font-bold">
                               {p.category} · {p.year}
@@ -130,14 +125,14 @@ export default function PortfolioDrawer({ isOpen, onClose }) {
                             <h3 className="text-white text-2xl md:text-4xl font-semibold tracking-tight mt-1">
                               {p.client}
                             </h3>
-                            <p className="text-white/60 text-sm mt-2 max-w-lg hidden md:block">
+                            <p className="text-white/60 text-sm mt-1 max-w-lg hidden md:block">
                               {p.desc}
                             </p>
                           </div>
                           <a
                             href="#cases"
                             onClick={onClose}
-                            className="w-12 h-12 rounded-full border border-white/30 flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300 group flex-shrink-0"
+                            className="w-11 h-11 rounded-full border border-white/30 flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300 group flex-shrink-0"
                           >
                             <ArrowUpRight className="w-5 h-5 text-white group-hover:text-black" strokeWidth={1.5} />
                           </a>
@@ -147,25 +142,47 @@ export default function PortfolioDrawer({ isOpen, onClose }) {
                   ))}
                 </SliderContent>
 
-                {/* Navigation buttons */}
+                {/* Navigation buttons — white progress bar with mix-blend-mode:difference for color inversion */}
                 <SliderBtnGroup className="grid grid-cols-2 md:grid-cols-4 gap-2 flex-shrink-0">
                   {PROJECTS.map((p) => (
                     <SliderBtn
                       key={p.sliderName}
                       value={p.sliderName}
                       className="text-left cursor-pointer p-3 md:p-4 rounded-xl border border-foreground/10 hover:border-foreground/30 transition-colors overflow-hidden"
-                      progressBarClass="bg-[#965EC7]/15 h-full"
+                      progressBarClass="bg-white h-full"
+                      progressStyle={{ mixBlendMode: "difference" }}
                     >
-                      <span className="text-[9px] uppercase tracking-[0.25em] text-[#965EC7] font-bold block mb-1 truncate">
+                      <span className="text-[9px] uppercase tracking-[0.25em] text-[#965EC7] font-bold block mb-1 truncate relative z-10">
                         {p.category}
                       </span>
-                      <span className="text-xs md:text-sm font-semibold text-foreground block truncate">
+                      <span className="text-xs md:text-sm font-semibold text-foreground block truncate relative z-10">
                         {p.client}
                       </span>
                     </SliderBtn>
                   ))}
                 </SliderBtnGroup>
               </ProgressSlider>
+            </div>
+
+            {/* ── Close handle — bottom center, primary close affordance ── */}
+            <div className="flex-shrink-0 flex justify-center pb-3 pt-1">
+              <motion.button
+                onClick={onClose}
+                aria-label="Fechar portfólio"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                className="flex flex-col items-center gap-1 group"
+              >
+                {/* Bouncing arrow indicator */}
+                <motion.div
+                  animate={{ y: [-3, 3, -3] }}
+                  transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+                  className="w-9 h-9 rounded-full border border-foreground/25 flex items-center justify-center group-hover:border-[#965EC7] group-hover:text-[#965EC7] transition-colors duration-300"
+                >
+                  <ChevronUp className="w-4 h-4" strokeWidth={2} />
+                </motion.div>
+                <span className="text-[9px] uppercase tracking-widest text-foreground/30 font-bold group-hover:text-[#965EC7] transition-colors duration-300">fechar</span>
+              </motion.button>
             </div>
           </motion.div>
         </>
