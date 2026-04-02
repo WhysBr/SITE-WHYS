@@ -39,13 +39,16 @@ const teamMembers = [
 
 export default function NossoTime() {
   return (
-    <section id="nosso-time" className="w-full min-h-[80vh] py-24 mb-32 flex flex-col items-center">
-      <div className="w-full text-center mb-16">
+    <section id="nosso-time" className="w-full min-h-[80vh] py-16 md:py-24 mb-16 md:mb-32 flex flex-col items-center">
+      <div className="w-full text-center mb-12 md:mb-16 px-4">
         <h2 className="text-sm uppercase tracking-[0.3em] font-medium text-foreground/50 mb-4">A Agência</h2>
-        <h3 className="text-5xl md:text-6xl font-light">Nosso <span className="font-serif italic text-[#965EC7]">Time</span></h3>
+        <h3 className="text-4xl sm:text-5xl md:text-6xl font-light">Nosso <span className="font-serif italic text-[#965EC7]">Time</span></h3>
       </div>
-      
-      <div className="flex flex-wrap items-center justify-center gap-12 w-full perspective-[1000px]">
+
+      <div
+        className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-8 md:gap-12 w-full px-4"
+        style={{ perspective: "1000px" }}
+      >
         {teamMembers.map((member) => (
           <InteractiveTeamCard
             key={member.id}
@@ -54,6 +57,7 @@ export default function NossoTime() {
             imageUrl={member.imageUrl}
             actionText={member.actionText}
             href={member.href}
+            className="w-full max-w-xs sm:w-72"
             onActionClick={() => console.log(`Acessando perfil de ${member.title}`)}
           />
         ))}

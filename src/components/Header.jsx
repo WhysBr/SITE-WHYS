@@ -1,63 +1,152 @@
 "use client";
 
 import Image from "next/image";
-import { Menu } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState } from "react";
+import { X, Menu } from "lucide-react";
 import { AnimatedThemeToggle } from "./ui/animated-theme-toggle";
 import { ButtonWithIcon } from "./ui/button-with-icon";
 
+const navLinks = [
+  { href: "#quem-somos", label: "Quem Somos" },
+  { href: "#processos", label: "Processos" },
+  { href: "#cases", label: "Cases" },
+  { href: "#faqs", label: "FAQs" },
+  { href: "#nosso-time", label: "Nosso Time" },
+];
+
 export default function Header() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
-    <motion.header 
-      initial={{ y: -50, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-      className="fixed top-0 left-0 w-full z-50 flex items-start justify-between px-4 md:px-8 xl:px-12 pt-6 pointer-events-none"
-    >
-      {/* Container Background */}
-      <div className="absolute inset-x-4 md:inset-x-8 xl:inset-x-12 top-6 h-20 border border-white/20 rounded-full flex items-center justify-between pointer-events-none bg-black/50 backdrop-blur-md"></div>
-      
-      {/* Left - Logo */}
-      <div className="relative z-10 flex items-center h-20 pl-6 lg:pl-10 pointer-events-auto cursor-pointer hover:opacity-80 transition-opacity">
-        <div className="rounded-full overflow-hidden border border-white/10 flex items-center justify-center bg-[#0a0a0a] w-16 h-16">
-          <Image src="/logo-simbolo.png" alt="WHYS Icon" width={64} height={64} className="object-cover w-full h-full filter hover:brightness-125" unoptimized />
-        </div>
-      </div>
+    <>
+      <motion.header
+        initial={{ y: -50, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+        className="fixed top-0 left-0 w-full z-50 flex items-start justify-between px-4 md:px-8 xl:px-12 pt-6 pointer-events-none"
+      >
+        {/* Container Background */}
+        <div className="absolute inset-x-4 md:inset-x-8 xl:inset-x-12 top-6 h-20 border border-white/20 rounded-full flex items-center justify-between pointer-events-none bg-black/50 backdrop-blur-md" />
 
-      {/* Center - Nav (Symmetrically anchored) */}
-      <div className="absolute inset-0 z-10 hidden md:block pointer-events-none">
-        
-        {/* Left Links */}
-        <div className="absolute right-[calc(50%+3.5rem)] lg:right-[calc(50%+4rem)] top-6 h-20 flex items-center justify-end gap-6 lg:gap-12 xl:gap-16 pointer-events-auto text-[10px] uppercase tracking-widest font-bold">
-          <a href="#quem-somos" className="hover:text-[#965EC7] transition-colors whitespace-nowrap">Quem Somos</a>
-          <a href="#processos" className="hover:text-[#965EC7] transition-colors">Processos</a>
+        {/* Left - Logo */}
+        <div className="relative z-10 flex items-center h-20 pl-4 md:pl-6 lg:pl-10 pointer-events-auto cursor-pointer hover:opacity-80 transition-opacity">
+          <div className="rounded-full overflow-hidden border border-white/10 flex items-center justify-center bg-[#0a0a0a] w-12 h-12 md:w-16 md:h-16">
+            <Image
+              src="/logo-simbolo.png"
+              alt="WHYS Icon"
+              width={64}
+              height={64}
+              className="object-cover w-full h-full filter hover:brightness-125"
+              unoptimized
+            />
+          </div>
         </div>
 
-        {/* Right Links */}
-        <div className="absolute left-[calc(50%+3.5rem)] lg:left-[calc(50%+4rem)] top-6 h-20 flex items-center justify-start gap-6 lg:gap-12 xl:gap-16 pointer-events-auto text-[10px] uppercase tracking-widest font-bold">
-          <a href="#cases" className="hover:text-[#965EC7] transition-colors whitespace-nowrap">Cases</a>
-          <a href="#faqs" className="hover:text-[#965EC7] transition-colors">FAQs</a>
-          <a href="#nosso-time" className="hover:text-[#965EC7] transition-colors whitespace-nowrap">Nosso Time</a>
+        {/* Center - Nav (Desktop only, symmetrically anchored) */}
+        <div className="absolute inset-0 z-10 hidden md:block pointer-events-none">
+          {/* Left Links */}
+          <div className="absolute right-[calc(50%+3.5rem)] lg:right-[calc(50%+4rem)] top-6 h-20 flex items-center justify-end gap-6 lg:gap-12 xl:gap-16 pointer-events-auto text-[10px] uppercase tracking-widest font-bold">
+            <a href="#quem-somos" className="hover:text-[#965EC7] transition-colors whitespace-nowrap text-white">Quem Somos</a>
+            <a href="#processos" className="hover:text-[#965EC7] transition-colors text-white">Processos</a>
+          </div>
+          {/* Right Links */}
+          <div className="absolute left-[calc(50%+3.5rem)] lg:left-[calc(50%+4rem)] top-6 h-20 flex items-center justify-start gap-6 lg:gap-12 xl:gap-16 pointer-events-auto text-[10px] uppercase tracking-widest font-bold">
+            <a href="#cases" className="hover:text-[#965EC7] transition-colors whitespace-nowrap text-white">Cases</a>
+            <a href="#faqs" className="hover:text-[#965EC7] transition-colors text-white">FAQs</a>
+            <a href="#nosso-time" className="hover:text-[#965EC7] transition-colors whitespace-nowrap text-white">Nosso Time</a>
+          </div>
         </div>
-      </div>
 
-      {/* Center Absolute Drop */}
-      <a href="#cases" className="absolute left-1/2 -translate-x-1/2 top-6 h-28 w-24 flex flex-col items-center justify-end pb-4 border border-t-0 border-white/20 rounded-b-full bg-black pointer-events-auto group outline-none">
-        <span className="text-[10px] uppercase font-bold tracking-widest mb-3 whitespace-nowrap -mt-6 group-hover:text-white/70 transition-colors">VER MAIS</span>
-        <div className="w-10 h-16 rounded-full border border-white/30 flex items-center justify-center cursor-pointer hover:border-white transition-colors group-hover:scale-105 active:scale-95 overflow-hidden">
-          <span className="w-px h-6 bg-white block relative group-hover:translate-y-5 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]">
-            <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-2 h-2 border-b border-r border-white rotate-45 translate-y-0.5"></span>
-          </span>
-        </div>
-      </a>
-
-      {/* Right Actions */}
-      <div className="relative z-10 flex items-center gap-4 h-20 pr-3 md:pr-6 pointer-events-auto">
-        <AnimatedThemeToggle />
-        <a href="#contato">
-          <ButtonWithIcon />
+        {/* Center Absolute Drop (Desktop only) */}
+        <a
+          href="#cases"
+          className="absolute left-1/2 -translate-x-1/2 top-6 h-28 w-24 hidden md:flex flex-col items-center justify-end pb-4 border border-t-0 border-white/20 rounded-b-full bg-black pointer-events-auto group outline-none"
+        >
+          <span className="text-[10px] uppercase font-bold tracking-widest text-white mb-3 whitespace-nowrap -mt-6 group-hover:text-white/70 transition-colors">VER MAIS</span>
+          <div className="w-10 h-16 rounded-full border border-white/30 flex items-center justify-center cursor-pointer hover:border-white transition-colors group-hover:scale-105 active:scale-95 overflow-hidden">
+            <span className="w-px h-6 bg-white block relative group-hover:translate-y-5 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]">
+              <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-2 h-2 border-b border-r border-white rotate-45 translate-y-0.5" />
+            </span>
+          </div>
         </a>
-      </div>
-    </motion.header>
+
+        {/* Right Actions */}
+        <div className="relative z-10 flex items-center gap-2 md:gap-4 h-20 pr-3 md:pr-6 pointer-events-auto">
+          <AnimatedThemeToggle />
+          <a href="#contato" className="hidden sm:block">
+            <ButtonWithIcon />
+          </a>
+          {/* Hamburger button — mobile only */}
+          <button
+            onClick={() => setMenuOpen(true)}
+            className="md:hidden flex items-center justify-center w-10 h-10 rounded-full border border-white/20 text-white hover:border-white/50 transition-colors"
+            aria-label="Abrir menu"
+          >
+            <Menu className="w-5 h-5" />
+          </button>
+        </div>
+      </motion.header>
+
+      {/* Mobile Fullscreen Menu Overlay */}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            initial={{ opacity: 0, backdropFilter: "blur(0px)" }}
+            animate={{ opacity: 1, backdropFilter: "blur(20px)" }}
+            exit={{ opacity: 0, backdropFilter: "blur(0px)" }}
+            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            className="fixed inset-0 z-[100] bg-black/95 flex flex-col items-center justify-center"
+          >
+            {/* Close Button */}
+            <button
+              onClick={() => setMenuOpen(false)}
+              className="absolute top-8 right-6 flex items-center justify-center w-12 h-12 rounded-full border border-white/20 text-white hover:border-white/60 transition-colors"
+              aria-label="Fechar menu"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            {/* Logo */}
+            <div className="absolute top-7 left-6">
+              <div className="rounded-full overflow-hidden border border-white/10 w-12 h-12">
+                <Image src="/logo-simbolo.png" alt="WHYS" width={48} height={48} className="object-cover w-full h-full" unoptimized />
+              </div>
+            </div>
+
+            {/* Nav Links */}
+            <nav className="flex flex-col items-center gap-10">
+              {navLinks.map((link, i) => (
+                <motion.a
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setMenuOpen(false)}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 20 }}
+                  transition={{ duration: 0.4, delay: i * 0.07, ease: [0.16, 1, 0.3, 1] }}
+                  className="text-4xl sm:text-5xl font-light text-white hover:text-[#965EC7] transition-colors tracking-tight"
+                >
+                  {link.label}
+                </motion.a>
+              ))}
+            </nav>
+
+            {/* CTA at bottom */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.4, delay: 0.4 }}
+              className="absolute bottom-12"
+            >
+              <a href="#contato" onClick={() => setMenuOpen(false)}>
+                <ButtonWithIcon />
+              </a>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 }
