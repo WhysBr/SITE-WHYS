@@ -9,7 +9,6 @@ import React, {
 } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-// ─── Context ────────────────────────────────────────────────────────────────
 const ProgressSliderContext = createContext(undefined);
 
 export const useProgressSliderContext = () => {
@@ -18,7 +17,6 @@ export const useProgressSliderContext = () => {
   return context;
 };
 
-// ─── ProgressSlider (root) ──────────────────────────────────────────────────
 export const ProgressSlider = ({
   children,
   duration = 5000,
@@ -103,12 +101,10 @@ export const ProgressSlider = ({
   );
 };
 
-// ─── SliderContent ──────────────────────────────────────────────────────────
 export const SliderContent = ({ children, className = "" }) => (
   <div className={className}>{children}</div>
 );
 
-// ─── SliderWrapper ──────────────────────────────────────────────────────────
 export const SliderWrapper = ({ children, value, className = "" }) => {
   const { active } = useProgressSliderContext();
   return (
@@ -129,16 +125,19 @@ export const SliderWrapper = ({ children, value, className = "" }) => {
   );
 };
 
-// ─── SliderBtnGroup ─────────────────────────────────────────────────────────
 export const SliderBtnGroup = ({ children, className = "" }) => (
   <div className={className}>{children}</div>
 );
 
-// ─── SliderBtn ──────────────────────────────────────────────────────────────
 /**
- * Progress bar uses mix-blend-mode: difference with a white fill so that
- * as it sweeps across the button, all text/colors underneath are inverted.
- * progressStyle prop allows passing extra inline styles to the fill span.
+ * SliderBtn with TRUE color-inversion effect:
+ *
+ * Key technique:
+ *  - `isolation: isolate` on the button creates a stacking context
+ *  - The white progress fill sits at z-index 20 (ABOVE the text)
+ *  - `mix-blend-mode: difference` causes: white fill over white text = black text
+ *    (255 - 255 = 0), and white fill over dark bg = white bg (255 - 0 = 255)
+ *  - `pointer-events: none` on the overlay so clicks still work
  */
 export const SliderBtn = ({
   children,
@@ -148,18 +147,21 @@ export const SliderBtn = ({
   progressStyle = {},
 }) => {
   const { active, progress, handleButtonClick, vertical } = useProgressSliderContext();
+
   return (
     <button
-      className={`relative ${active === value ? "opacity-100" : "opacity-50 hover:opacity-75"} transition-opacity ${className}`}
+      className={`relative overflow-hidden ${
+        active === value ? "opacity-100" : "opacity-50 hover:opacity-75"
+      } transition-opacity ${className}`}
       style={{ isolation: "isolate" }}
       onClick={() => handleButtonClick(value)}
     >
-      {/* Children sit on top */}
+      {/* Text content — z-index 10, rendered in stacking context */}
       <div className="relative z-10">{children}</div>
 
-      {/* Progress fill — z-20 so it's above children; mix-blend-mode:difference inverts colors */}
+      {/* White progress overlay — z-index 20 (ABOVE text), mix-blend-mode inverts */}
       <div
-        className="absolute inset-0 overflow-hidden pointer-events-none"
+        className="absolute inset-0 pointer-events-none z-20"
         role="progressbar"
         aria-valuenow={active === value ? progress : 0}
         aria-valuemin={0}
