@@ -1,0 +1,73 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-inter), sans-serif;
+  --font-serif: var(--font-playfair), serif;
+  
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-input: var(--border);
+  --color-ring: var(--ring);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #000000;
+  --primary: #965EC7;
+  --primary-foreground: #ffffff;
+  --border: #e2e8f0;
+  --ring: #965EC7;
+  --accent: #f1f5f9;
+  --accent-foreground: #0f172a;
+}
+
+.dark {
+  --background: #000000;
+  --foreground: #ffffff;
+  --primary: #965EC7;
+  --primary-foreground: #ffffff;
+  --border: rgba(255, 255, 255, 0.2);
+  --ring: #965EC7;
+  --accent: #1e293b;
+  --accent-foreground: #f8fafc;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
+/* Base utilities for the specific design borders */
+.border-glass {
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+@keyframes wave {
+  0% { transform: translateX(-150%) skewX(-20deg); }
+  100% { transform: translateX(250%) skewX(-20deg); }
+}
+
+.animate-wave-hover {
+  animation: wave 1.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+/* Lenis */
+html.lenis, html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}

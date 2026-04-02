@@ -1,0 +1,63 @@
+"use client";
+
+import { InteractiveTeamCard } from "@/components/ui/3d-card";
+
+const teamMembers = [
+  {
+    id: 1,
+    title: "Alexandre",
+    subtitle: "Lead Designer",
+    imageUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1974&auto=format&fit=crop",
+    actionText: "Ver Perfil",
+    href: "#"
+  },
+  {
+    id: 2,
+    title: "Beatriz",
+    subtitle: "UX/UI Specialist",
+    imageUrl: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1974&auto=format&fit=crop",
+    actionText: "Ver Perfil",
+    href: "#"
+  },
+  {
+    id: 3,
+    title: "Carlos",
+    subtitle: "Fullstack Developer",
+    imageUrl: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1974&auto=format&fit=crop",
+    actionText: "Ver Perfil",
+    href: "#"
+  },
+  {
+    id: 4,
+    title: "Daniela",
+    subtitle: "Product Manager",
+    imageUrl: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=1976&auto=format&fit=crop",
+    actionText: "Ver Perfil",
+    href: "#"
+  }
+];
+
+export default function NossoTime() {
+  return (
+    <section id="nosso-time" className="w-full min-h-[80vh] py-24 mb-32 flex flex-col items-center">
+      <div className="w-full text-center mb-16">
+        <h2 className="text-sm uppercase tracking-[0.3em] font-medium text-foreground/50 mb-4">A Agência</h2>
+        <h3 className="text-5xl md:text-6xl font-light">Nosso <span className="font-serif italic text-[#965EC7]">Time</span></h3>
+      </div>
+      
+      <div className="flex flex-wrap items-center justify-center gap-12 w-full perspective-[1000px]">
+        {teamMembers.map((member) => (
+          <InteractiveTeamCard
+            key={member.id}
+            title={member.title}
+            subtitle={member.subtitle}
+            imageUrl={member.imageUrl}
+            actionText={member.actionText}
+            href={member.href}
+            onActionClick={() => console.log(`Acessando perfil de ${member.title}`)}
+          />
+        ))}
+      </div>
+    </section>
+  );
+}
