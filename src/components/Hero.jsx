@@ -97,12 +97,13 @@ export default function Hero() {
 
       {/* Gigantic Typography */}
       <div className="w-full flex flex-col items-start relative z-0 mt-16 md:mt-20 px-4 md:px-0">
-        <div className="w-full flex justify-between items-end leading-[0.85] overflow-hidden text-foreground">
+        {/* Mobile: stacked column. Desktop: side-by-side justify-between */}
+        <div className="w-full flex flex-col md:flex-row md:justify-between items-start md:items-end leading-[0.88] overflow-hidden text-foreground">
           <motion.h1
             style={{ y: "100%" }}
             animate={{ y: 0 }}
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
-            className="text-[14vw] sm:text-[11vw] md:text-[7.5vw] font-semibold uppercase tracking-[-0.02em]"
+            className="text-[18vw] sm:text-[14vw] md:text-[7.5vw] font-semibold uppercase tracking-[-0.02em] whitespace-nowrap"
           >
             Creative
           </motion.h1>
@@ -110,17 +111,18 @@ export default function Hero() {
             style={{ y: "100%" }}
             animate={{ y: 0 }}
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
-            className="text-[14vw] sm:text-[11vw] md:text-[7.5vw] font-semibold uppercase tracking-[-0.02em]"
+            className="text-[18vw] sm:text-[14vw] md:text-[7.5vw] font-semibold uppercase tracking-[-0.02em] whitespace-nowrap"
           >
             Design
           </motion.h1>
         </div>
 
-        <div className="w-full relative flex justify-center items-end leading-[0.85] mt-3 md:mt-6 text-foreground">
-          {/* Projects Widget */}
+        {/* Row 2: Digital + Studio — stacked on mobile, inline on desktop */}
+        <div className="w-full relative flex flex-col md:flex-row md:justify-center md:items-end leading-[0.88] mt-1 md:mt-6 text-foreground overflow-hidden">
+          {/* Projects Widget — mobile: static position below text, desktop: absolute */}
           <motion.div
             variants={itemVariants}
-            className="absolute left-0 bottom-2 md:bottom-4 flex flex-col items-start cursor-pointer group"
+            className="md:absolute md:left-0 md:bottom-4 flex flex-col items-start cursor-pointer group mt-4 md:mt-0 order-last md:order-none"
           >
             <div className="flex items-center gap-1 md:gap-2 font-bold text-sm md:text-lg xl:text-xl uppercase tracking-tighter group-hover:text-foreground/70 transition-colors">
               NOSSOS{" "}
@@ -142,13 +144,13 @@ export default function Hero() {
             </svg>
           </motion.div>
 
-          {/* Digital Studio */}
-          <div className="flex flex-1 overflow-hidden relative pb-4 md:pb-6 pt-2">
+          {/* Digital + Studio */}
+          <div className="flex overflow-hidden relative pb-2 md:pb-6 pt-0 md:pt-2">
             <motion.h1
               style={{ y: "100%" }}
               animate={{ y: 0 }}
               transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
-              className="text-[14vw] sm:text-[11vw] md:text-[7.5vw] font-semibold uppercase tracking-[-0.02em] ml-auto font-sans not-italic"
+              className="text-[18vw] sm:text-[14vw] md:text-[7.5vw] font-semibold uppercase tracking-[-0.02em] font-sans not-italic whitespace-nowrap"
             >
               Digital
             </motion.h1>
@@ -156,14 +158,14 @@ export default function Hero() {
               style={{ y: "100%" }}
               animate={{ y: 0 }}
               transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.4 }}
-              className="text-[15vw] sm:text-[11.5vw] md:text-[8vw] font-serif italic tracking-tight font-normal mr-auto pl-4 md:pl-8"
+              className="text-[19vw] sm:text-[14.5vw] md:text-[8vw] font-serif italic tracking-tight font-normal pl-3 md:pl-8 whitespace-nowrap"
             >
               Studio
             </motion.h1>
           </div>
 
           {/* Dots */}
-          <motion.div variants={itemVariants} className="absolute right-0 bottom-4 md:bottom-6 flex gap-2">
+          <motion.div variants={itemVariants} className="absolute right-0 bottom-2 md:bottom-6 hidden md:flex gap-2">
             <span className="w-3 h-3 md:w-3.5 md:h-3.5 rounded-full bg-foreground block" />
             <span className="w-3 h-3 md:w-3.5 md:h-3.5 rounded-full border-2 border-foreground/60 block" />
           </motion.div>
