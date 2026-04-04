@@ -212,20 +212,17 @@ const FUNNELS = [
 // ─── Animation variants ──────────────────────────────────────
 const ease = [0.16, 1, 0.3, 1];
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 32 },
+const sectionAnim = {
+  hidden: { opacity: 0, y: 28 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.65, ease } },
-  exit:    { opacity: 0, y: -20, transition: { duration: 0.3, ease } },
+  exit:    { opacity: 0, y: -16, transition: { duration: 0.3, ease } },
 };
 
-const stagger = {
-  visible: { transition: { staggerChildren: 0.06 } },
-};
-
-const childFade = {
-  hidden: { opacity: 0, y: 18 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease } },
-};
+const slideUp = (delay = 0) => ({
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.55, ease, delay },
+});
 
 // ─── Main component ──────────────────────────────────────────
 export default function Contato() {
@@ -235,7 +232,7 @@ export default function Contato() {
   return (
     <section
       id="contato"
-      className="w-full relative overflow-hidden"
+      className="w-full relative"
       style={{
         background: CREAM,
         color: INK,
@@ -244,7 +241,7 @@ export default function Contato() {
       }}
     >
       {/* ── Top label ────────────────────────────────────────── */}
-      <div className="absolute top-7 left-8 md:left-12">
+      <div className="px-8 md:px-12 pt-8">
         <span
           className="text-[9px] uppercase tracking-[0.35em] font-black"
           style={{ color: `${INK}44` }}
@@ -253,7 +250,7 @@ export default function Contato() {
         </span>
       </div>
 
-      <div className="px-8 md:px-12 pt-24 pb-16 md:pb-24">
+      <div className="px-8 md:px-12 pt-10 pb-16 md:pb-24">
         {/* ── Giant heading — animated on change ────────────── */}
         <AnimatePresence mode="wait">
           <motion.div
@@ -290,13 +287,13 @@ export default function Contato() {
             /* ───── MENU ───── */
             <motion.div
               key="menu"
-              variants={{ ...fadeUp, ...stagger }}
+              variants={sectionAnim}
               initial="hidden"
               animate="visible"
               exit="exit"
             >
               <motion.p
-                variants={childFade}
+                {...slideUp(0.05)}
                 className="text-sm md:text-base font-light mb-12 md:mb-16 max-w-xs"
                 style={{ color: `${INK}66` }}
               >
@@ -311,7 +308,7 @@ export default function Contato() {
                 {FUNNELS.map((f, i) => (
                   <motion.button
                     key={f.id}
-                    variants={childFade}
+                    {...slideUp(0.1 + i * 0.07)}
                     onClick={() => setSelected(f.id)}
                     className="group flex items-center justify-between text-left transition-all duration-500 hover:pl-3 md:hover:pl-6"
                     style={{
@@ -376,7 +373,7 @@ export default function Contato() {
 
               {/* Footer row */}
               <motion.div
-                variants={childFade}
+                {...slideUp(0.35)}
                 className="mt-14 md:mt-20 pt-8 flex flex-col sm:flex-row gap-8 sm:gap-16"
                 style={{ borderTop: `1px solid ${INK_GHOST}` }}
               >
@@ -412,14 +409,14 @@ export default function Contato() {
             /* ───── FORM ───── */
             <motion.div
               key={selected}
-              variants={{ ...fadeUp, ...stagger }}
+              variants={sectionAnim}
               initial="hidden"
               animate="visible"
               exit="exit"
             >
               {/* Back button */}
               <motion.button
-                variants={childFade}
+                {...slideUp(0)}
                 onClick={() => setSelected(null)}
                 className="flex items-center gap-2 text-sm font-semibold mb-12 group"
                 style={{ color: `${INK}60` }}
@@ -433,7 +430,7 @@ export default function Contato() {
               </motion.button>
 
               {/* Form */}
-              <motion.div variants={childFade}>
+              <motion.div {...slideUp(0.1)}>
                 {funnel && <funnel.Form />}
               </motion.div>
             </motion.div>
