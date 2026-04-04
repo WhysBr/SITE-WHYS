@@ -47,14 +47,14 @@ export default function Processos() {
 
   return (
     <section ref={sectionRef} id="processos" className="w-full py-16 md:py-40 border-t border-foreground/10 relative overflow-hidden">
-      {/* Title */}
-      <div className="relative z-10 text-center mb-16 md:mb-32 px-4">
-        <h2 className="text-sm uppercase tracking-[0.3em] font-medium text-foreground/50 mb-4 md:mb-6">Nossa Metodologia</h2>
+      {/* Title — LEFT aligned */}
+      <div className="relative z-10 text-left mb-16 md:mb-32 px-4">
+        <h2 className="text-xs uppercase tracking-[0.35em] font-black text-foreground/35 mb-4 md:mb-6">Nossa Metodologia</h2>
         <h3
           ref={headingRef}
-          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light tracking-tight"
+          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-[-0.03em]"
         >
-          O caminho para o <span className="font-serif italic text-[#965EC7]">sucesso</span>
+          O caminho para o <span className="font-serif italic font-normal text-[#965EC7]">sucesso</span>
         </h3>
       </div>
 
@@ -97,8 +97,9 @@ export default function Processos() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-15%" }}
                     transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-                    className="w-full rounded-[1.5rem] md:rounded-[2rem] border border-foreground/10 bg-background p-6 md:p-8 group relative overflow-hidden cursor-default
-                               hover:border-[#965EC7]/50 transition-colors duration-500"
+                    className="w-full rounded-[1.5rem] md:rounded-[2rem] border border-foreground/8 p-6 md:p-8 group relative overflow-hidden cursor-default
+                               hover:border-[#965EC7]/40 transition-colors duration-500"
+                    style={{ background: "var(--surface)" }}
                   >
                     {/* Purple glow on hover */}
                     <div className="absolute inset-0 bg-gradient-to-br from-[#965EC7]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />

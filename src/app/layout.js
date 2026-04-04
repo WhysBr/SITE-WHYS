@@ -93,7 +93,7 @@ export default function RootLayout({ children }) {
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="icon" href="/logo-simbolo.png" type="image/png" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-        <meta name="theme-color" content="#000000" />
+        <meta name="theme-color" content="#f4f4f0" />
         <meta property="og:url" content="https://whysbr.com" />
         {/* —— JSON-LD Structured Data —— */}
         <script
@@ -109,12 +109,12 @@ export default function RootLayout({ children }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
         />
       </head>
-      <body className="bg-background text-foreground antialiased font-sans min-h-screen selection:bg-white selection:text-black overflow-x-hidden">
+      <body className="bg-background text-foreground antialiased font-sans min-h-screen overflow-x-hidden">
         <ThemeProvider
           attribute="class"
-          defaultTheme="dark"
-          enableSystem
-          disableTransitionOnChange
+          defaultTheme="light"
+          enableSystem={false}
+          disableTransitionOnChange={false}
         >
           {children}
           <Analytics />

@@ -39,14 +39,14 @@ const teamMembers = [
 
 export default function NossoTime() {
   return (
-    <section id="nosso-time" className="w-full min-h-[80vh] py-16 md:py-24 mb-16 md:mb-32 flex flex-col items-center">
-      <div className="w-full text-center mb-12 md:mb-16 px-4">
-        <h2 className="text-sm uppercase tracking-[0.3em] font-medium text-foreground/50 mb-4">A Agência</h2>
-        <h3 className="text-4xl sm:text-5xl md:text-6xl font-light">Nosso <span className="font-serif italic text-[#965EC7]">Time</span></h3>
+    <section id="nosso-time" className="w-full min-h-[80vh] py-16 md:py-24 mb-16 md:mb-32 flex flex-col items-start">
+      <div className="w-full text-left mb-12 md:mb-16 px-4 md:px-0">
+        <h2 className="text-xs uppercase tracking-[0.35em] font-black text-foreground/35 mb-4">A Agência</h2>
+        <h3 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-[-0.03em]">Nosso <span className="font-serif italic font-normal text-[#965EC7]">Time</span></h3>
       </div>
 
       <div
-        className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-8 md:gap-12 w-full px-4"
+        className="flex flex-col sm:flex-row flex-wrap items-start justify-start gap-8 md:gap-12 w-full px-4 md:px-0"
         style={{ perspective: "1000px" }}
       >
         {teamMembers.map((member) => (

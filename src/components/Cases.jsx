@@ -91,8 +91,8 @@ export default function Cases() {
     return (
       <section id="cases" className="w-full bg-black text-white py-16 px-4">
         <div className="mb-12">
-          <h2 className="text-sm uppercase tracking-[0.3em] font-medium text-white/50 mb-3">Nossos Cases</h2>
-          <h3 className="text-4xl font-light">Projetos <span className="font-serif italic text-[#965EC7]">Recentes</span></h3>
+          <h2 className="text-xs uppercase tracking-[0.35em] font-black text-white/35 mb-3">Nossos Cases</h2>
+          <h3 className="text-4xl md:text-5xl font-black tracking-[-0.03em]">Projetos <span className="font-serif italic font-normal text-[#965EC7]">Recentes</span></h3>
         </div>
         <div className="flex flex-col gap-6">
           {portfolioCases.map((projeto) => (
@@ -120,8 +120,8 @@ export default function Cases() {
     >
       <div className="sticky top-0 flex h-screen items-center overflow-hidden">
         <div className="absolute top-12 left-4 md:left-12 z-20">
-          <h2 className="text-base uppercase tracking-[0.3em] font-medium text-white/50 mb-2">Nossos Cases</h2>
-          <h3 className="text-4xl md:text-5xl font-light">Projetos <span className="font-serif italic text-[#965EC7]">Recentes</span></h3>
+          <h2 className="text-xs uppercase tracking-[0.35em] font-black text-white/35 mb-2">Nossos Cases</h2>
+          <h3 className="text-4xl md:text-5xl font-black tracking-[-0.03em]">Projetos <span className="font-serif italic font-normal text-[#965EC7]">Recentes</span></h3>
         </div>
 
         <motion.div style={{ x }} className="flex gap-12 md:gap-24 px-4 md:px-12 pl-[5vw] md:pl-[20vw] pt-24">

@@ -75,15 +75,15 @@ export default function Faqs() {
       id="faqs"
       className="w-full py-16 md:py-40 border-t border-foreground/10 mt-8 md:mt-12 relative overflow-hidden"
     >
-      <div className="max-w-4xl mx-auto px-4 md:px-8 relative z-10">
-        {/* Heading */}
+      <div className="px-4 md:px-0 relative z-10">
+        {/* Heading — LEFT */}
         <div className="mb-12 md:mb-20">
-          <h2 className="text-sm uppercase tracking-[0.3em] font-medium text-foreground/50 mb-4 md:mb-6">Suas Dúvidas</h2>
+          <h2 className="text-xs uppercase tracking-[0.35em] font-black text-foreground/35 mb-4 md:mb-6">Suas Dúvidas</h2>
           <h3
             ref={headingRef}
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light tracking-tight"
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-[-0.03em] max-w-3xl"
           >
-            Perguntas <span className="font-serif italic text-[#965EC7]">Frequentes</span>
+            Perguntas <span className="font-serif italic font-normal text-[#965EC7]">Frequentes</span>
           </h3>
         </div>
 

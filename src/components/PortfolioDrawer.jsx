@@ -69,18 +69,18 @@ export default function PortfolioDrawer({ isOpen, onClose }) {
             animate={{ y: 0 }}
             exit={{ y: "-100%" }}
             transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed top-0 left-0 right-0 z-[70] bg-background rounded-b-[2rem] overflow-hidden flex flex-col"
-            style={{ height: "78vh" }}
+            className="fixed top-0 left-0 right-0 z-[70] rounded-b-[2rem] overflow-hidden flex flex-col"
+            style={{ height: "78vh", background: "var(--cream)", color: "var(--foreground)" }}
           >
             {/* Header bar */}
             <div className="flex items-center justify-between px-6 md:px-10 pt-6 pb-4 border-b border-foreground/10 flex-shrink-0">
               <div>
-                <p className="text-[10px] uppercase tracking-[0.3em] text-foreground/40 font-bold mb-1">Portfólio</p>
-                <h2 className="text-xl md:text-3xl font-light tracking-tight">
-                  Projetos <span className="font-serif italic text-[#965EC7]">Recentes</span>
+                <p className="text-[10px] uppercase tracking-[0.35em] text-foreground/35 font-black mb-1">Portfólio</p>
+                <h2 className="text-xl md:text-3xl font-black tracking-tight">
+                  Projetos <span className="font-serif italic font-normal text-[#965EC7]">Recentes</span>
                 </h2>
               </div>
-              {/* Top-right close (X) — secondary */}
+              {/* Top-right close (X) */}
               <button
                 onClick={onClose}
                 aria-label="Fechar portfólio"

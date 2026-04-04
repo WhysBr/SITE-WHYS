@@ -102,10 +102,10 @@ export default function QuemSomos() {
       {/* Left */}
       <div className="w-full md:w-1/2 p-6 md:p-16 lg:p-20 xl:p-28 flex flex-col justify-between border-b md:border-b-0 md:border-r border-foreground/10">
         <div>
-          <h2 className="text-sm uppercase tracking-[0.3em] font-medium text-foreground/50 mb-8 md:mb-12">Quem Somos</h2>
+          <h2 className="text-xs uppercase tracking-[0.35em] font-black text-foreground/35 mb-8 md:mb-12">Quem Somos</h2>
           <h3
             ref={headingRef}
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light leading-tight tracking-tight"
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black leading-tight tracking-[-0.03em]"
           >
             Desafiamos o <span className="font-serif italic font-normal text-[#965EC7]">ordinário</span> para construir o extraordinário.
           </h3>
@@ -132,16 +132,16 @@ export default function QuemSomos() {
 
           <div ref={metricsRef} className="mt-12 md:mt-20 pt-8 md:pt-10 border-t border-foreground/10 flex gap-8 md:gap-10">
             <div>
-              <div id="counter-exp" className="text-4xl md:text-5xl font-light font-serif italic mb-2 md:mb-3">0+</div>
-              <div className="text-xs uppercase tracking-widest text-foreground/40 font-bold">Anos de XP</div>
+              <div id="counter-exp" className="text-5xl md:text-6xl font-black tracking-tight mb-2 md:mb-3">0+</div>
+              <div className="text-xs uppercase tracking-widest text-foreground/35 font-black">Anos de XP</div>
             </div>
             <div>
-              <div id="counter-proj" className="text-4xl md:text-5xl font-light font-serif italic mb-2 md:mb-3">0+</div>
-              <div className="text-xs uppercase tracking-widest text-foreground/40 font-bold">Projetos</div>
+              <div id="counter-proj" className="text-5xl md:text-6xl font-black tracking-tight mb-2 md:mb-3">0+</div>
+              <div className="text-xs uppercase tracking-widest text-foreground/35 font-black">Projetos</div>
             </div>
             <div>
-              <div id="counter-entrega" className="text-4xl md:text-5xl font-light font-serif italic mb-2 md:mb-3 text-[#965EC7]">0%</div>
-              <div className="text-xs uppercase tracking-widest text-foreground/40 font-bold">Entrega</div>
+              <div id="counter-entrega" className="text-5xl md:text-6xl font-black tracking-tight mb-2 md:mb-3 text-[#965EC7]">0%</div>
+              <div className="text-xs uppercase tracking-widest text-foreground/35 font-black">Entrega</div>
             </div>
           </div>
         </div>
