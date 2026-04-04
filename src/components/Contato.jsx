@@ -1,24 +1,39 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
-import { Phone, MapPin, Mail, Share2, ArrowRight } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ArrowRight, ArrowLeft, ArrowUpRight } from "lucide-react";
 
-// Social icons
-const FacebookIcon  = ({ className }) => (<svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>);
-const TwitterIcon   = ({ className }) => (<svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg>);
-const LinkedinIcon  = ({ className }) => (<svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>);
-const YoutubeIcon   = ({ className }) => (<svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33 2.78 2.78 0 0 0 1.94 2c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.33 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>);
-const GithubIcon    = ({ className }) => (<svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>);
-const WhatsAppIcon  = ({ className }) => (<svg className={className} viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.122 1.532 5.857L.057 23.428a.5.5 0 0 0 .627.61l5.758-1.51A11.953 11.953 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 0 1-5.022-1.378l-.36-.214-3.733.979.997-3.645-.234-.373A9.818 9.818 0 0 1 12 2.182c5.426 0 9.818 4.392 9.818 9.818 0 5.427-4.392 9.818-9.818 9.818z"/></svg>);
+// ─── Config ────────────────────────────────────────────────
+const WA_NUMBER = "5569981162676";
 
-// Animated label + input field
-function FormField({ label, id, children }) {
+const sendToWhatsApp = (payload) => {
+  const text = Object.entries(payload)
+    .filter(([, v]) => v)
+    .map(([k, v]) => `*${k}:* ${v}`)
+    .join("\n");
+  window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`, "_blank");
+};
+
+// ─── Design tokens (cream palette) ─────────────────────────
+const CREAM     = "#f4f4f0";
+const INK       = "#1a1a1a";
+const INK_GHOST = "rgba(26,26,26,0.12)";
+const PURPLE    = "#965EC7";
+
+// ─── Shared form primitives ─────────────────────────────────
+const iClass =
+  "w-full bg-transparent border-b py-3 text-base font-light focus:outline-none transition-all duration-300 placeholder:opacity-30";
+const iStyle = { borderColor: INK_GHOST, color: INK };
+const iFocusStyle = { borderColor: INK };
+
+function Field({ label, id, children }) {
   return (
-    <div className="flex flex-col gap-1.5 group">
+    <div className="flex flex-col gap-1.5">
       <label
         htmlFor={id}
-        className="text-[11px] uppercase tracking-[0.2em] font-bold text-foreground/40 group-focus-within:text-[#965EC7] transition-colors duration-300"
+        className="text-[10px] uppercase tracking-[0.25em] font-black"
+        style={{ color: `${INK}55` }}
       >
         {label}
       </label>
@@ -27,159 +42,403 @@ function FormField({ label, id, children }) {
   );
 }
 
-export default function Contato() {
-  const [formData, setFormData] = useState({ nome: "", email: "", assunto: "", mensagem: "" });
-  const [sending, setSending] = useState(false);
+function FInput({ id, ...rest }) {
+  const [focused, setFocused] = useState(false);
+  return (
+    <input
+      id={id}
+      className={iClass}
+      style={{ ...iStyle, ...(focused ? iFocusStyle : {}) }}
+      onFocus={() => setFocused(true)}
+      onBlur={() => setFocused(false)}
+      {...rest}
+    />
+  );
+}
 
-  const handleWhatsApp = (e) => {
+function FTextarea({ id, rows = 4, ...rest }) {
+  const [focused, setFocused] = useState(false);
+  return (
+    <textarea
+      id={id}
+      rows={rows}
+      className={`${iClass} resize-none leading-relaxed`}
+      style={{ ...iStyle, ...(focused ? iFocusStyle : {}) }}
+      onFocus={() => setFocused(true)}
+      onBlur={() => setFocused(false)}
+      {...rest}
+    />
+  );
+}
+
+// Budget chips
+const BUDGETS = ["< R$ 5k", "R$ 5–15k", "R$ 15–50k", "R$ 50k+"];
+function BudgetChips({ value, onChange }) {
+  return (
+    <div className="flex flex-wrap gap-2 pt-2">
+      {BUDGETS.map((b) => (
+        <button
+          key={b}
+          type="button"
+          onClick={() => onChange(value === b ? "" : b)}
+          className="px-4 py-2 rounded-full border text-xs font-semibold tracking-wide transition-all duration-200"
+          style={
+            value === b
+              ? { background: INK, color: CREAM, borderColor: INK }
+              : { background: "transparent", color: INK, borderColor: INK_GHOST + "aa" }
+          }
+        >
+          {b}
+        </button>
+      ))}
+    </div>
+  );
+}
+
+// Submit button
+function SubmitBtn({ sending, label = "Enviar via WhatsApp" }) {
+  return (
+    <motion.button
+      type="submit"
+      disabled={sending}
+      whileHover={{ scale: 1.02 }}
+      whileTap={{ scale: 0.98 }}
+      className="flex items-center gap-3 rounded-full py-4 px-8 w-full sm:w-fit text-sm font-semibold tracking-wide transition-colors cursor-pointer disabled:opacity-50"
+      style={{ background: INK, color: CREAM }}
+    >
+      {sending ? "Abrindo WhatsApp…" : label}
+      {!sending && <ArrowUpRight className="w-4 h-4" strokeWidth={1.5} />}
+    </motion.button>
+  );
+}
+
+// ─── Form: 01 Start a project ───────────────────────────────
+function ProjectForm() {
+  const [d, setD] = useState({ Nome: "", Empresa: "", Email: "", Budget: "", Detalhes: "" });
+  const [sending, setSending] = useState(false);
+  const handle = (k) => (e) => setD((p) => ({ ...p, [k]: e.target.value }));
+  const submit = (e) => {
     e.preventDefault();
     setSending(true);
-    const text = `*Nome:* ${formData.nome}\n*E-mail:* ${formData.email}\n*Assunto:* ${formData.assunto}\n\n*Mensagem:*\n${formData.mensagem}`;
-    const url = `https://wa.me/5569981162676?text=${encodeURIComponent(text)}`;
-    window.open(url, "_blank");
-
-    // Reset after short delay
-    setTimeout(() => {
-      setSending(false);
-      setFormData({ nome: "", email: "", assunto: "", mensagem: "" });
-    }, 1200);
+    sendToWhatsApp({ Tipo: "Novo Projeto", ...d });
+    setTimeout(() => setSending(false), 1400);
   };
+  return (
+    <form onSubmit={submit} className="flex flex-col gap-7 w-full max-w-lg">
+      <Field label="Nome" id="p-nome">
+        <FInput id="p-nome" type="text" placeholder="Seu nome completo" value={d.Nome} onChange={handle("Nome")} required autoComplete="name" />
+      </Field>
+      <Field label="Empresa" id="p-empresa">
+        <FInput id="p-empresa" type="text" placeholder="Nome da empresa (opcional)" value={d.Empresa} onChange={handle("Empresa")} />
+      </Field>
+      <Field label="E-mail" id="p-email">
+        <FInput id="p-email" type="email" placeholder="seu@email.com" value={d.Email} onChange={handle("Email")} required autoComplete="email" />
+      </Field>
+      <Field label="Budget estimado" id="p-budget">
+        <BudgetChips value={d.Budget} onChange={(v) => setD((p) => ({ ...p, Budget: v }))} />
+      </Field>
+      <Field label="Detalhes do Projeto" id="p-detalhes">
+        <FTextarea id="p-detalhes" rows={5} placeholder="Descreva o projeto, objetivos e prazo…" value={d.Detalhes} onChange={handle("Detalhes")} required />
+      </Field>
+      <SubmitBtn sending={sending} label="Iniciar conversa" />
+    </form>
+  );
+}
 
-  const inputClass =
-    "w-full bg-transparent border-b border-foreground/20 py-3 text-sm md:text-base text-foreground focus:outline-none focus:border-[#965EC7] transition-colors duration-300 placeholder:text-foreground/20";
+// ─── Form: 02 Application ───────────────────────────────────
+function ApplicationForm() {
+  const [d, setD] = useState({ Nome: "", Vaga: "", Portfolio: "", LinkedIn: "" });
+  const [sending, setSending] = useState(false);
+  const handle = (k) => (e) => setD((p) => ({ ...p, [k]: e.target.value }));
+  const submit = (e) => {
+    e.preventDefault();
+    setSending(true);
+    sendToWhatsApp({ Tipo: "Candidatura", ...d });
+    setTimeout(() => setSending(false), 1400);
+  };
+  return (
+    <form onSubmit={submit} className="flex flex-col gap-7 w-full max-w-lg">
+      <Field label="Nome" id="a-nome">
+        <FInput id="a-nome" type="text" placeholder="Seu nome completo" value={d.Nome} onChange={handle("Nome")} required autoComplete="name" />
+      </Field>
+      <Field label="Vaga desejada" id="a-vaga">
+        <FInput id="a-vaga" type="text" placeholder="Ex: Designer UI/UX, Dev Front-end…" value={d.Vaga} onChange={handle("Vaga")} required />
+      </Field>
+      <Field label="Portfolio URL" id="a-portfolio">
+        <FInput id="a-portfolio" type="url" placeholder="https://seuportfolio.com" value={d.Portfolio} onChange={handle("Portfolio")} />
+      </Field>
+      <Field label="LinkedIn" id="a-linkedin">
+        <FInput id="a-linkedin" type="url" placeholder="https://linkedin.com/in/perfil" value={d.LinkedIn} onChange={handle("LinkedIn")} />
+      </Field>
+      <SubmitBtn sending={sending} label="Enviar candidatura" />
+    </form>
+  );
+}
+
+// ─── Form: 03 General Inquiry ───────────────────────────────
+function InquiryForm() {
+  const [d, setD] = useState({ Nome: "", Email: "", Mensagem: "" });
+  const [sending, setSending] = useState(false);
+  const handle = (k) => (e) => setD((p) => ({ ...p, [k]: e.target.value }));
+  const submit = (e) => {
+    e.preventDefault();
+    setSending(true);
+    sendToWhatsApp({ Tipo: "Dúvida Geral", ...d });
+    setTimeout(() => setSending(false), 1400);
+  };
+  return (
+    <form onSubmit={submit} className="flex flex-col gap-7 w-full max-w-lg">
+      <Field label="Nome" id="i-nome">
+        <FInput id="i-nome" type="text" placeholder="Seu nome" value={d.Nome} onChange={handle("Nome")} required autoComplete="name" />
+      </Field>
+      <Field label="E-mail" id="i-email">
+        <FInput id="i-email" type="email" placeholder="seu@email.com" value={d.Email} onChange={handle("Email")} required autoComplete="email" />
+      </Field>
+      <Field label="Mensagem" id="i-mensagem">
+        <FTextarea id="i-mensagem" rows={5} placeholder="Sua mensagem…" value={d.Mensagem} onChange={handle("Mensagem")} required />
+      </Field>
+      <SubmitBtn sending={sending} label="Enviar mensagem" />
+    </form>
+  );
+}
+
+// ─── Funnel routes ───────────────────────────────────────────
+const FUNNELS = [
+  { id: "project",     n: "01", title: "Start a project",  sub: "Sales funnel",   headline: "Vamos construir algo extraordinário.",  Form: ProjectForm },
+  { id: "application", n: "02", title: "Application",      sub: "Talent funnel",  headline: "Faça parte do nosso time.",             Form: ApplicationForm },
+  { id: "inquiry",     n: "03", title: "General Inquiry",   sub: "Dúvidas gerais", headline: "Fale o que quiser.",                    Form: InquiryForm },
+];
+
+// ─── Animation variants ──────────────────────────────────────
+const ease = [0.16, 1, 0.3, 1];
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 32 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.65, ease } },
+  exit:    { opacity: 0, y: -20, transition: { duration: 0.3, ease } },
+};
+
+const stagger = {
+  visible: { transition: { staggerChildren: 0.06 } },
+};
+
+const childFade = {
+  hidden: { opacity: 0, y: 18 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease } },
+};
+
+// ─── Main component ──────────────────────────────────────────
+export default function Contato() {
+  const [selected, setSelected] = useState(null);
+  const funnel = FUNNELS.find((f) => f.id === selected);
 
   return (
-    <section id="contato" className="w-full py-16 md:py-24 flex flex-col lg:flex-row gap-12 md:gap-16 lg:gap-24 justify-between items-start">
-
-      {/* Left: Info */}
-      <div className="w-full lg:w-[55%] flex flex-col">
-        <span className="text-sm font-medium tracking-wider mb-5 md:mb-6 text-foreground/70">/ entre em contato /</span>
-
-        <h2 className="text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight mb-6 md:mb-8 leading-[1.1]">
-          Estamos sempre prontos para ajudá-lo e tirar suas dúvidas
-        </h2>
-
-        <p className="text-foreground/70 text-base md:text-lg mb-10 md:mb-16 max-w-xl">
-          Nossa equipe está à disposição para ouvir sobre seu projeto e entender como podemos potencializar os resultados do seu negócio no ambiente digital.
-        </p>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 md:gap-12">
-          <div className="flex flex-col">
-            <Phone className="w-6 h-6 mb-3 text-foreground/80 stroke-[1.5]" />
-            <h3 className="text-lg md:text-xl font-medium mb-3">Central de Atendimento</h3>
-            <p className="text-foreground/70 text-sm">+55 69 9 8116-2676</p>
-          </div>
-
-          <div className="flex flex-col">
-            <MapPin className="w-6 h-6 mb-3 text-foreground/80 stroke-[1.5]" />
-            <h3 className="text-lg md:text-xl font-medium mb-3">Nossa Localização</h3>
-            <p className="text-foreground/70 text-sm">Brasil, Porto Velho</p>
-            <p className="text-foreground/70 text-sm">RO - Centro</p>
-          </div>
-
-          <div className="flex flex-col">
-            <Mail className="w-6 h-6 mb-3 text-foreground/80 stroke-[1.5]" />
-            <h3 className="text-lg md:text-xl font-medium mb-3">E-mail</h3>
-            <a href="mailto:whysadmin@gmail.com" className="text-foreground/70 text-sm hover:text-[#965EC7] transition-colors">
-              whysadmin@gmail.com
-            </a>
-          </div>
-
-          <div className="flex flex-col">
-            <Share2 className="w-6 h-6 mb-3 text-foreground/80 stroke-[1.5]" />
-            <h3 className="text-lg md:text-xl font-medium mb-3">Redes Sociais</h3>
-            <div className="flex items-center gap-4 text-foreground/70">
-              <a href="#" className="hover:text-[#965EC7] transition-colors"><FacebookIcon className="w-5 h-5" /></a>
-              <a href="#" className="hover:text-[#965EC7] transition-colors"><TwitterIcon className="w-5 h-5" /></a>
-              <a href="#" className="hover:text-[#965EC7] transition-colors"><LinkedinIcon className="w-5 h-5" /></a>
-              <a href="#" className="hover:text-[#965EC7] transition-colors"><YoutubeIcon className="w-5 h-5" /></a>
-              <a href="#" className="hover:text-[#965EC7] transition-colors"><GithubIcon className="w-5 h-5" /></a>
-            </div>
-          </div>
-        </div>
+    <section
+      id="contato"
+      className="w-full relative overflow-hidden"
+      style={{
+        background: CREAM,
+        color: INK,
+        borderRadius: "1.75rem",
+        marginTop: "3rem",
+      }}
+    >
+      {/* ── Top label ────────────────────────────────────────── */}
+      <div className="absolute top-7 left-8 md:left-12">
+        <span
+          className="text-[9px] uppercase tracking-[0.35em] font-black"
+          style={{ color: `${INK}44` }}
+        >
+          {selected ? `Contact / ${funnel.title}` : "Contact"}
+        </span>
       </div>
 
-      {/* Right: Form */}
-      <div className="w-full lg:w-[40%] flex flex-col mt-0">
-        <h3 className="text-2xl md:text-3xl font-medium mb-2">Entre em Contato</h3>
-        <p className="text-foreground/50 text-sm mb-10 md:mb-12">
-          Defina seus objetivos e veja como podemos transformar sua visão em realidade digital.
-        </p>
-
-        <form id="contato-form" className="flex flex-col gap-8 w-full" onSubmit={handleWhatsApp}>
-
-          {/* Nome */}
-          <FormField label="Nome" id="nome">
-            <input
-              id="nome"
-              type="text"
-              placeholder="Seu nome completo"
-              value={formData.nome}
-              onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
-              className={inputClass}
-              required
-              autoComplete="name"
-            />
-          </FormField>
-
-          {/* E-mail */}
-          <FormField label="E-mail" id="email">
-            <input
-              id="email"
-              type="email"
-              placeholder="seu@email.com"
-              value={formData.email}
-              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-              className={inputClass}
-              required
-              autoComplete="email"
-            />
-          </FormField>
-
-          {/* Assunto */}
-          <FormField label="Assunto" id="assunto">
-            <input
-              id="assunto"
-              type="text"
-              placeholder="Branding, Web Design, E-commerce…"
-              value={formData.assunto}
-              onChange={(e) => setFormData({ ...formData, assunto: e.target.value })}
-              className={inputClass}
-              required
-            />
-          </FormField>
-
-          {/* Mensagem */}
-          <FormField label="Mensagem" id="mensagem">
-            <textarea
-              id="mensagem"
-              rows={4}
-              placeholder="Conte-nos sobre o seu projeto, objetivos e prazo esperado…"
-              value={formData.mensagem}
-              onChange={(e) => setFormData({ ...formData, mensagem: e.target.value })}
-              className={`${inputClass} resize-none leading-relaxed`}
-              required
-            />
-          </FormField>
-
-          {/* Submit */}
-          <motion.button
-            type="submit"
-            disabled={sending}
-            whileHover={{ scale: sending ? 1 : 1.02 }}
-            whileTap={{ scale: sending ? 1 : 0.98 }}
-            className="flex items-center justify-center gap-3 bg-foreground text-background rounded-full py-4 px-8 w-full sm:w-fit mt-2 text-sm font-medium transition-colors hover:bg-foreground/90 cursor-pointer disabled:opacity-60"
+      <div className="px-8 md:px-12 pt-24 pb-16 md:pb-24">
+        {/* ── Giant heading — animated on change ────────────── */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={selected ?? "root"}
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -16 }}
+            transition={{ duration: 0.55, ease }}
+            className="mb-10 md:mb-16"
           >
-            {sending ? (
-              <>Abrindo WhatsApp…</>
-            ) : (
-              <>
-                Enviar via WhatsApp
-                <WhatsAppIcon className="w-4 h-4 text-background" />
-              </>
+            <h2
+              className="font-black tracking-[-0.04em] leading-[0.88]"
+              style={{
+                fontSize: "clamp(2.8rem, 9.5vw, 8.5rem)",
+                color: INK,
+              }}
+            >
+              {selected ? funnel.title : "Let's\u00A0talk."}
+            </h2>
+            {selected && (
+              <p
+                className="mt-4 text-base md:text-lg font-light"
+                style={{ color: `${INK}66` }}
+              >
+                {funnel.headline}
+              </p>
             )}
-          </motion.button>
-        </form>
+          </motion.div>
+        </AnimatePresence>
+
+        {/* ── Main body ──────────────────────────────────────── */}
+        <AnimatePresence mode="wait">
+          {!selected ? (
+            /* ───── MENU ───── */
+            <motion.div
+              key="menu"
+              variants={{ ...fadeUp, ...stagger }}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+            >
+              <motion.p
+                variants={childFade}
+                className="text-sm md:text-base font-light mb-12 md:mb-16 max-w-xs"
+                style={{ color: `${INK}66` }}
+              >
+                Escolha como podemos te ajudar.
+              </motion.p>
+
+              {/* Numbered list */}
+              <nav
+                className="flex flex-col"
+                style={{ borderTop: `1px solid ${INK_GHOST}` }}
+              >
+                {FUNNELS.map((f, i) => (
+                  <motion.button
+                    key={f.id}
+                    variants={childFade}
+                    onClick={() => setSelected(f.id)}
+                    className="group flex items-center justify-between text-left transition-all duration-500 hover:pl-3 md:hover:pl-6"
+                    style={{
+                      padding: "1.5rem 0",
+                      borderBottom: `1px solid ${INK_GHOST}`,
+                    }}
+                  >
+                    {/* Left: number + title */}
+                    <div className="flex items-baseline gap-4 md:gap-8">
+                      <span
+                        className="text-xs font-black tabular-nums font-mono shrink-0"
+                        style={{ color: `${INK}33` }}
+                      >
+                        {f.n}
+                      </span>
+                      <div className="flex flex-col sm:flex-row sm:items-baseline sm:gap-5">
+                        <span
+                          className="font-black tracking-tight leading-none transition-colors duration-300 group-hover:text-[#965EC7]"
+                          style={{
+                            fontSize: "clamp(1.5rem, 4.5vw, 3.25rem)",
+                            color: INK,
+                          }}
+                        >
+                          {f.title}
+                        </span>
+                        <span
+                          className="text-[10px] uppercase tracking-[0.25em] font-black hidden sm:inline"
+                          style={{ color: `${INK}33` }}
+                        >
+                          {f.sub}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Arrow circle */}
+                    <div
+                      className="w-10 h-10 rounded-full border flex items-center justify-center shrink-0 transition-all duration-300 group-hover:scale-110"
+                      style={{
+                        borderColor: INK_GHOST,
+                        background: "transparent",
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.background = INK;
+                        e.currentTarget.style.borderColor = INK;
+                        e.currentTarget.querySelector("svg").style.color = CREAM;
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.background = "transparent";
+                        e.currentTarget.style.borderColor = INK_GHOST;
+                        e.currentTarget.querySelector("svg").style.color = INK;
+                      }}
+                    >
+                      <ArrowRight
+                        className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5"
+                        style={{ color: INK }}
+                        strokeWidth={1.5}
+                      />
+                    </div>
+                  </motion.button>
+                ))}
+              </nav>
+
+              {/* Footer row */}
+              <motion.div
+                variants={childFade}
+                className="mt-14 md:mt-20 pt-8 flex flex-col sm:flex-row gap-8 sm:gap-16"
+                style={{ borderTop: `1px solid ${INK_GHOST}` }}
+              >
+                {[
+                  { label: "E-mail",      value: "whysadmin@gmail.com",       href: "mailto:whysadmin@gmail.com" },
+                  { label: "WhatsApp",    value: "+55 69 9 8116-2676",        href: `https://wa.me/${WA_NUMBER}` },
+                  { label: "Localização", value: "Porto Velho, RO — Brasil",  href: null },
+                ].map(({ label, value, href }) => (
+                  <div key={label}>
+                    <p
+                      className="text-[9px] uppercase tracking-[0.3em] font-black mb-1.5"
+                      style={{ color: `${INK}33` }}
+                    >
+                      {label}
+                    </p>
+                    {href ? (
+                      <a
+                        href={href}
+                        target={href.startsWith("http") ? "_blank" : undefined}
+                        className="text-sm font-light transition-colors duration-200 hover:opacity-70"
+                        style={{ color: INK }}
+                      >
+                        {value}
+                      </a>
+                    ) : (
+                      <p className="text-sm font-light" style={{ color: INK }}>{value}</p>
+                    )}
+                  </div>
+                ))}
+              </motion.div>
+            </motion.div>
+          ) : (
+            /* ───── FORM ───── */
+            <motion.div
+              key={selected}
+              variants={{ ...fadeUp, ...stagger }}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+            >
+              {/* Back button */}
+              <motion.button
+                variants={childFade}
+                onClick={() => setSelected(null)}
+                className="flex items-center gap-2 text-sm font-semibold mb-12 group"
+                style={{ color: `${INK}60` }}
+                whileHover={{ x: -4, color: INK }}
+              >
+                <ArrowLeft
+                  className="w-4 h-4 transition-transform duration-300 group-hover:-translate-x-1"
+                  strokeWidth={1.5}
+                />
+                Voltar
+              </motion.button>
+
+              {/* Form */}
+              <motion.div variants={childFade}>
+                {funnel && <funnel.Form />}
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </section>
   );
